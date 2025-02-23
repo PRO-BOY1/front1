@@ -27,11 +27,13 @@ export const AuthProvider = ({ children }) => {
     fetchUser();
   }, []);
 
-  return (
-    <AuthContext.Provider value={{ user, loginWithDiscord }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  const providerValue = { user, loginWithDiscord };
+
+return (
+  <AuthContext.Provider value={providerValue}>
+    {children}
+  </AuthContext.Provider>
+);
 };
 
 export default AuthContext;
