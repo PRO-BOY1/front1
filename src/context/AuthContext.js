@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
     fetchUser();
   }, []);
 
-   return ((
+   return (
   <AuthContext.Provider value={ user, loginWithDiscord }>
     {children}
   </AuthContext.Provider>
