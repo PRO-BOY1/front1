@@ -28,10 +28,11 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loginWithDiscord }}>
-      {children}
-    </AuthContext.Provider>
-  ); // ✅ This closing bracket must be here
-};
+  <AuthContext.Provider value={{ user, loginWithDiscord }}>
+       {children}
+     </AuthContext.Provider> 
+   ); // ✅ This closing bracket must be here
+ };
+
 
 export default AuthContext;
