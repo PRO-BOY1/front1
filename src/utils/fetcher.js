@@ -1,15 +1,11 @@
-import axios from "axios";
+import axios from 'axios';
 
-const API_BASE = import.meta.env.VITE_BACKEND_URL;
-
-export const fetcher = async (endpoint) => {
+export const fetcher = async (url) => {
   try {
-    const response = await axios.get(`${API_BASE}${endpoint}`, {
-      withCredentials: true, // Ensures cookies (if needed) are sent with requests
-    });
+    const response = await axios.get(url);
     return response.data;
   } catch (error) {
-    console.error("API Fetch Error:", error);
+    console.error('Error fetching data:', error);
     throw error;
   }
 };
