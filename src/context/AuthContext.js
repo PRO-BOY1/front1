@@ -1,10 +1,24 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, ReactNode } from "react";
 import axios from "axios";
 
-const AuthContext = createContext();
+// Define types for our context value
+interface AuthContextType {
+  user: any | null;
+  loginWithDiscord: () => Promise<void>;
+}
 
-export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+// Create context with a default value
+const AuthContext = createContext<AuthContextType>({
+  user: null,
+  loginWithDiscord: async () => {},
+});
+
+interface AuthProviderProps {
+  children: ReactNode;
+}
+
+export const AuthProvider = ({ children }: AuthProviderProps) => {
+  const [user, setUser] = useState<any | null>(null);
 
   const loginWithDiscord = async () => {
     try {
@@ -27,13 +41,17 @@ export const AuthProvider = ({ children }) => {
     fetchUser();
   }, []);
 
-  const providerValue = { user, loginWithDiscord };
+  // Create the context value object
+  const contextValue: AuthContextType = {
+    user,
+    loginWithDiscord,
+  };
 
-return (
-  <AuthContext.Provider value={providerValue}>
-    {children}
-  </AuthContext.Provider>
-);
+  return (
+    <AuthContext.Provider value={contextValue}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export default AuthContext;
