@@ -1,32 +1,37 @@
-import { createContext, useState, useEffect } from 'react';
-import axios from 'axios';
+import { createContext, useState, useEffect } from "react";
+import axios from "axios";
 
-export const AuthContext = createContext();
+const AuthContext = createContext();
 
-export function AuthProvider({ children }) {
+export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+
+  const loginWithDiscord = async () => {
+    try {
+      window.location.href = `${import.meta.env.VITE_BACKEND_URL}/auth/discord`;
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
+  };
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/auth/status`, {
-          withCredentials: true,
-        });
-        setUser(res.data);
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/auth/user`, { withCredentials: true });
+        setUser(response.data);
       } catch (error) {
-        setUser(null);
+        console.error("User fetch failed:", error);
       }
     };
+
     fetchUser();
   }, []);
-
-  const loginWithDiscord = () => {
-    window.location.href = `${import.meta.env.VITE_BACKEND_URL}/auth/discord`;
-  };
 
   return (
     <AuthContext.Provider value={{ user, loginWithDiscord }}>
       {children}
     </AuthContext.Provider>
   );
-}
+};
+
+export default AuthContext;
