@@ -8,7 +8,7 @@ export const AuthProvider = ({ children }) => {
 
   const loginWithDiscord = async () => {
     try {
-      window.location.href = `${import.meta.env.VITE_BACKEND_URL}/auth/discord`;
+      window.location.href = `https://law-back-end.up.railway.app/auth/discord`;
     } catch (error) {
       console.error("Login failed:", error);
     }
@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/auth/user`, { withCredentials: true });
+        const response = await axios.get(`https://law-back-end.up.railway.app/auth/user`, { withCredentials: true });
         setUser(response.data);
       } catch (error) {
         console.error("User fetch failed:", error);
@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
   <AuthContext.Provider value={{ user, loginWithDiscord }}>
-    <div>{children}</div>
+    {children}
   </AuthContext.Provider>
 ); // Ensure the return statement is correctly formatted
 };
